@@ -8,8 +8,16 @@ var input = document.getElementById('input'), // input/output button
 
 var currentValue = "";
 var currentOperator = "";
-
+number
 for (var i = 0; i < number.length; i++) {
+  if (number[i].innerHTML === "C") {
+    number[i].addEventListener("click", function() {
+      input.innerHTML = "";
+      currentValue = "";
+      currentOperator = "";
+    });
+    continue;
+  }
   number[i].addEventListener("click", function(e) {
     input.innerHTML += e.target.innerHTML;
   });

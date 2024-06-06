@@ -8,7 +8,8 @@ var input = document.getElementById('input'), // input/output button
 
 var currentValue = "";
 var currentOperator = "";
-number
+var newEquation = false;
+var float = false;
 for (var i = 0; i < number.length; i++) {
   if (number[i].innerHTML === "C") {
     number[i].addEventListener("click", function() {
@@ -18,8 +19,21 @@ for (var i = 0; i < number.length; i++) {
     });
     continue;
   }
+  else if (number[i].innerHTML === ".") {
+    number[i].addEventListener("click", function() {
+      if (!float) {
+        if (input.innerHTML === "") {
+          input.innerHTML = "0";
+        }
+        input.innerHTML += ".";
+        float = true;
+      }
+    });
+    continue;
+  }
   number[i].addEventListener("click", function(e) {
-    input.innerHTML += e.target.innerHTML;
+    if (newEquation){input.innerHTML = e.target.innerHTML; newEquation = false;}
+    else{    input.innerHTML += e.target.innerHTML;   }
   });
 }
 
@@ -36,6 +50,10 @@ function multiply(a,b){
 }
 
 function divide(a,b){
+    if (b === 0) {
+      alert("You can't divide by zero");
+      return 0;
+    }
     return a/b;
 }
 
@@ -61,6 +79,7 @@ function operate(number1, operator, number2){
 
 for (var i = 0; i < operator.length; i++) {
   operator[i].addEventListener("click", function(e) {
+    float = false;
     if(currentValue === ""){
         currentValue = input.innerHTML;
         currentOperator = e.target.innerHTML;
@@ -68,7 +87,8 @@ for (var i = 0; i < operator.length; i++) {
     } else {
         currentValue = operate(currentValue, currentOperator, parseFloat(input.innerHTML));
         currentOperator = e.target.innerHTML;
-        input.innerHTML = "";
+        input.innerHTML = currentValue;
+        newEquation = true;
     }
   });
 }
@@ -81,4 +101,6 @@ result.addEventListener("click", function() {
     input.innerHTML = currentValue;
     currentValue = "";
     currentOperator = "";
+    newEquation = true;
+    float = false;
 });

@@ -51,7 +51,8 @@ function multiply(a,b){
 
 function divide(a,b){
     if (b === 0) {
-      alert("You can't divide by zero");
+      alert("blows up access with mind");
+      document.body.remove(document.getElementById("main"));
       return 0;
     }
     return a/b;
@@ -87,18 +88,18 @@ for (var i = 0; i < operator.length; i++) {
     } else {
         currentValue = operate(currentValue, currentOperator, parseFloat(input.innerHTML));
         currentOperator = e.target.innerHTML;
-        input.innerHTML = currentValue;
+        input.innerHTML = Math.round((currentValue+Number.EPSILON)*1000000)/1000000;;
         newEquation = true;
     }
   });
 }
 
 result.addEventListener("click", function() {
-  console.log(currentValue);
-  console.log(currentOperator);
-  console.log(input.innerHTML);
     currentValue = operate(currentValue, currentOperator, parseFloat(input.innerHTML));
-    input.innerHTML = currentValue;
+    if (currentValue === undefined || isNaN(currentValue)){
+        currentValue = "";
+    }
+    input.innerHTML = Math.round((currentValue+Number.EPSILON)*1000000)/1000000;
     currentValue = "";
     currentOperator = "";
     newEquation = true;
